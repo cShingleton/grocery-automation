@@ -16,11 +16,11 @@ const data = [
 //COUNT UP
 Array.prototype.countUp = function() {
   deepFreeze(this);
-  return this.reduce(function(obj, val) {
-    if (obj[val[0]]) {
-       obj[val[0]] += val[1];
+  return this.reduce(function(obj, key) {
+    if (obj[key[0]]) {
+       obj[key[0]] += key[1];
     } else {
-       obj[val[0]] = val[1];
+       obj[key[0]] = key[1];
     }
     return obj;
   }, {});
