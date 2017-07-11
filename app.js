@@ -26,17 +26,6 @@ Array.prototype.countUp = function() {
   }, {});
 };
 
-console.log(data.countUp());
-
-const fruit = {
-  apples: 148,
-  pears: 45,
-  oranges: 183,
-  grapes: 498,
-  kiwis: 201
-};
-
-
 //STOCK UP
 Object.prototype.stockUp = function(val) {
   deepFreeze(this);
@@ -45,18 +34,16 @@ Object.prototype.stockUp = function(val) {
   return obj;
 }
 
-console.log(fruit.stockUp(7));
-
-
-//EXPLAIN
-const fruit2 = {
-  apples: 148,
-  pears: 45,
-  oranges: 183,
-  grapes: 498,
-  kiwis: 201
+//STOCK UP REDUCE VERSION
+Object.prototype.stockUp2 = function(val) {
+  deepFreeze(this);
+  return Object.keys(this).reduce((obj, key) => {
+    obj[key] = this[key] + val;
+    return obj
+  }, {})
 }
 
+//EXPLAIN
 Object.prototype.explain = function() {
   deepFreeze(this);
   let arr = [];
@@ -66,7 +53,15 @@ Object.prototype.explain = function() {
   return arr.join(', ');
 };
 
-console.log(fruit2.explain());
+//EXPLAIN REDUCE VERSION
+Object.prototype.explain2 = function() {
+  deepFreeze(this);
+  const list = Object.keys(this);
+  return Object.keys(this).reduce((str, key, index) => {
+    str += `${key} ${this[key]}${(list[index + 1] ? ', ' : '')}`;
+    return str;
+  }, '');
+}
 
-console.log(data.countUp().stockUp(5).explain());
+console.log(data.countUp().stockUp2(5).explain());
 
